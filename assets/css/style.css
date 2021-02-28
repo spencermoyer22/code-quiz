@@ -1,0 +1,50 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+p {
+    font-size: 18px;
+}
+
+header p {
+    display: inline;
+}
+
+header a {
+    text-decoration: none;
+    color: #563191;
+}
+
+.container-home {
+    width: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.container-home p {
+    padding: 0 35px;
+}
+
+.btn {
+    background-color: #563191;
+    font-size: 18px;
+    color: #f1f1f1;
+    border-radius: 10px;
+    padding: 5px 15px;
+    border: none;
+}
+
+.btn:hover {
+    cursor: pointer;
+    background-color: #9d4ebf;
+}
+
+.btn:active {
+    outline: none;
+    border: none;
+}

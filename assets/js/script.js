@@ -26,27 +26,48 @@ var questionsArray = [
     }
 ];
 var quizContentEl = document.querySelector("#quiz-body");
+var quizHeader = document.querySelector("header")
 var timeLeft = 0;
 var highscores = [];
 
 var homeScreen = function() {
+    // add time count to header
+    var timeCounter = document.createElement("p");
+    timeCounter.textContent = "Time Left: " + timeLeft;
+
+    quizHeader.appendChild(timeCounter);
+
+    //create container for quiz home page
+    var container = document.createElement("div");
+    container.className="container-home";
+
+    quizContentEl.appendChild(container);
+
     // Create h1 element for quiz home page
     var quizTitle = document.createElement("h1");
     quizTitle.textContent = "JavaScript Quiz Challenge";
 
-    quizContentEl.appendChild(quizTitle);
+    container.appendChild(quizTitle);
     
     // create description for quiz under h1 element
     var quizDescription = document.createElement("p");
-    quizDescription.textContent = "Answer the JavaScript related code questions within the time limit. If you answer incorrectly you will be pentalized 10 seconds.";
+    quizDescription.textContent = "Answer the JavaScript related code questions within the time limit. If you answer incorrectly you will be penalized 10 seconds.";
 
-    quizContentEl.appendChild(quizDescription);
+    container.appendChild(quizDescription);
 
     var buttonStart = document.createElement("button");
     buttonStart.textContent= "Start Quiz";
     buttonStart.className = "btn btn-start";
 
-    quizContentEl.append(buttonStart);
-}
+    container.append(buttonStart);
+
+    buttonStart.onclick = beginQuiz();
+};
+
+var beginQuiz = function() {
+    // remove the first 
+    
+
+};
 
 homeScreen();
