@@ -27,19 +27,15 @@ var questionsArray = [
 ];
 var quizContentEl = document.querySelector("#quiz-body");
 var quizHeader = document.querySelector("header")
-var timeLeft = 0;
+var score = 0;
 var highscores = [];
+var timeLeft = 0;
+var questionIndex = 0;
 
 var homeScreen = function() {
-    // add time count to header
-    var timeCounter = document.createElement("p");
-    timeCounter.textContent = "Time Left: " + timeLeft;
-
-    quizHeader.appendChild(timeCounter);
-
     //create container for quiz home page
     var container = document.createElement("div");
-    container.className="container-home";
+    container.className="container container-home";
 
     quizContentEl.appendChild(container);
 
@@ -60,14 +56,123 @@ var homeScreen = function() {
     buttonStart.className = "btn btn-start";
 
     container.append(buttonStart);
-
-    buttonStart.onclick = beginQuiz();
 };
 
 var beginQuiz = function() {
-    // remove the first 
+    // begin counting down
+    countdown();
+
+    addQuestions();  
+};
+
+var addQuestions = function() {
+    if (questionIndex + 1 > questionsArray.length) {
+        endQuiz();
+        return;
+    }
+
+    // remove the quiz home page
+    var oldContainer = document.querySelector(".container");
+    oldContainer.remove();
+
+    // create new container for quiz questions and answers
+    var quizContainer = document.createElement("div");
+    quizContainer.className = "container container-quiz";
+
+    quizContentEl.appendChild(quizContainer);
+
+    //create question el for container
+    var questionEl = document.createElement("h2");
+    questionEl.className = "question-element";
+
+    quizContainer.appendChild(questionEl);
+
+    // Create answer elements for container
+    var answer1 = document.createElement("button");
+    answer1.className = "btn btn-answer";
+    answer1.setAttribute("id", 1);
+
+    quizContainer.appendChild(answer1);
+
+    var answer2 = document.createElement("button");
+    answer2.className = "btn btn-answer";
+    answer2.setAttribute("id", 2);
+
+    quizContainer.appendChild(answer2);
+
+    var answer3 = document.createElement("button");
+    answer3.className = "btn btn-answer";
+    answer3.setAttribute("id", 3);
+
+    quizContainer.appendChild(answer3);
+
+    var answer4 = document.createElement("button");
+    answer4.className = "btn btn-answer";
+    answer4.setAttribute("id", 4);
+
+    quizContainer.appendChild(answer4);
+
     
+    questionEl.textContent = questionsArray[questionIndex].question;
+    answer1.textContent = questionsArray[questionIndex].choices[0];
+    answer2.textContent = questionsArray[questionIndex].choices[1];
+    answer3.textContent = questionsArray[questionIndex].choices[2];
+    answer4.textContent = questionsArray[questionIndex].choices[3];
+    quizContainer.addEventListener("click", checkAnswer);
+};
+
+var buttonHandler = function() {
+    //get target element
+    var targetEl = event.target;
+
+    if (targetEl.matches(".btn-start")) {
+        beginQuiz();
+    }
+};
+
+var countdown = function() {
+      timeLeft = 75;
+      var counter = document.querySelector(".counter");
+
+      var timeCountdown = setInterval(function() {
+          if (timeLeft > 0) {
+            counter.textContent = timeLeft;
+            timeLeft--;
+          }
+          else {
+              endQuiz();
+          }
+      }, 1000);
+};
+    
+var checkAnswer = function() {
+    var buttonClicked = event.target;
+    console.log(buttonClicked);
+    var buttonId = buttonClicked.getAttribute("id");
+    
+    if (parseInt(buttonId) === questionsArray[questionIndex].answer) {
+        score += 10;
+        console.log(score);
+        questionIndex++;
+        addQuestions();
+    }
+    else {
+        // subtract penalty from time left
+        timeLeft -= 10;
+        questionIndex++;
+        addQuestions();
+    }
+    console.log(questionIndex);
+};
+
+var endQuiz = function() {
+    // remove quiz questions and aswers buttons
+    var oldContainer = document.querySelector(".container-quiz");
+    oldContainer.remove();
+
 
 };
+
+quizContentEl.addEventListener("click", buttonHandler);
 
 homeScreen();

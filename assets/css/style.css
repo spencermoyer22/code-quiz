@@ -18,12 +18,15 @@ header a {
     color: #563191;
 }
 
-.container-home {
+.container {
     width: 50%;
+    margin: 0 auto;
+}
+
+.container-home {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin: 0 auto;
 }
 
 .container-home p {
@@ -44,7 +47,13 @@ header a {
     background-color: #9d4ebf;
 }
 
-.btn:active {
+.btn:focus {
     outline: none;
     border: none;
+}
+
+.btn-answer {
+    display: block;
+    margin: 5px 0;
+    width: 30%;
 }
