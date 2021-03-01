@@ -9,7 +9,7 @@ This application uses javascript to dynamically create HTML elements on a web pa
 * CSS
 
 ## Screenshot
-![Javascript Dynamic Quiz](url)
+![Javascript Dynamic Quiz](home-page.png)
 > This screenshot shows the home page of the Javascript Quiz. Clicking the button will begin the quiz.
 
 ## Website
