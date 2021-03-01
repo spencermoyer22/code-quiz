@@ -131,8 +131,9 @@ var buttonHandler = function() {
     else if (targetEl.matches(".btn-answer")) {
         checkAnswer();
     }
-    else if(targetEl.matches("btn-score")) {
-        
+    else if (targetEl.matches(".btn-score")) {
+       // saveScore();
+       window.location.assign("../../highscores.html");
     }
 };
 
@@ -205,6 +206,11 @@ var endQuiz = function() {
     inputEl.setAttribute("type", "text");
 
     endQuizContainer.appendChild(inputEl);
+
+    // var anchorEl = document.createElement("a");
+    // anchorEl.href = "../../../highscores.html";
+    
+    // endQuizContainer.appendChild(anchorEl);
 
     var buttonEl = document.createElement("button")
     buttonEl.className = "btn btn-score";
