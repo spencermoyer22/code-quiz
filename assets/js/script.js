@@ -255,7 +255,7 @@ var saveScores = function() {
 
 var loadScores = function() {
     // retrieve scores from storage
-    var savedScores = localstorage.getItem("scores");
+    var savedScores = localStorage.getItem("scores");
 
     // check if value is null
     if (!savedScores) {
@@ -279,7 +279,7 @@ var createHighScoreEl = function(highscoreObj) {
 };
 
 var deleteScores = function () {
-    
+
 };
 
 quizContentEl.addEventListener("click", buttonHandler);
