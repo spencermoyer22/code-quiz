@@ -278,6 +278,10 @@ var createHighScoreEl = function(highscoreObj) {
     pEl.className = "highscore-info";
 };
 
+var deleteScores = function () {
+    
+};
+
 quizContentEl.addEventListener("click", buttonHandler);
 
 homeScreen();
