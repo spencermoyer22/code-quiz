@@ -62,7 +62,8 @@ var beginQuiz = function() {
     // begin counting down
     countdown();
 
-    addQuestions();  
+    // call function to add questions elements
+    addQuestions();
 };
 
 var addQuestions = function() {
@@ -77,7 +78,7 @@ var addQuestions = function() {
 
     // create new container for quiz questions and answers
     var quizContainer = document.createElement("div");
-    quizContainer.className = "container container-quiz";
+    quizContainer.className = "container";
 
     quizContentEl.appendChild(quizContainer);
 
@@ -118,7 +119,6 @@ var addQuestions = function() {
     answer2.textContent = questionsArray[questionIndex].choices[1];
     answer3.textContent = questionsArray[questionIndex].choices[2];
     answer4.textContent = questionsArray[questionIndex].choices[3];
-    quizContainer.addEventListener("click", checkAnswer);
 };
 
 var buttonHandler = function() {
@@ -127,6 +127,12 @@ var buttonHandler = function() {
 
     if (targetEl.matches(".btn-start")) {
         beginQuiz();
+    }
+    else if (targetEl.matches(".btn-answer")) {
+        checkAnswer();
+    }
+    else if(targetEl.matches("btn-score")) {
+        
     }
 };
 
@@ -140,6 +146,7 @@ var countdown = function() {
             timeLeft--;
           }
           else {
+              counter.textContent = timeLeft;
               endQuiz();
           }
       }, 1000);
@@ -147,12 +154,10 @@ var countdown = function() {
     
 var checkAnswer = function() {
     var buttonClicked = event.target;
-    console.log(buttonClicked);
     var buttonId = buttonClicked.getAttribute("id");
     
     if (parseInt(buttonId) === questionsArray[questionIndex].answer) {
         score += 10;
-        console.log(score);
         questionIndex++;
         addQuestions();
     }
@@ -162,15 +167,50 @@ var checkAnswer = function() {
         questionIndex++;
         addQuestions();
     }
-    console.log(questionIndex);
 };
 
 var endQuiz = function() {
     // remove quiz questions and aswers buttons
-    var oldContainer = document.querySelector(".container-quiz");
+    var oldContainer = document.querySelector(".container");
     oldContainer.remove();
 
+    // create container for end of quiz
+    var endQuizContainer = document.createElement("div");
+    endQuizContainer.className = "container container-end";
 
+    quizContentEl.appendChild(endQuizContainer);
+
+    // add h2 element
+    var h2El = document.createElement("h2");
+    h2El.textContent = "All done!";
+
+    endQuizContainer.appendChild(h2El);
+
+    // add p element
+    var pEl = document.createElement("p");
+    pEl.textContent = "Your final score is " + score + ".";
+
+    endQuizContainer.appendChild(pEl);
+
+    // add elements to take high score
+    var labelEl = document.createElement("label")
+    labelEl.setAttribute("for", "#initials");
+    labelEl.setAttribute("name", "initials");
+    labelEl.textContent = "Enter initials:";
+
+    endQuizContainer.appendChild(labelEl);
+
+    var inputEl = document.createElement("input");
+    inputEl.setAttribute("id", "initials")
+    inputEl.setAttribute("type", "text");
+
+    endQuizContainer.appendChild(inputEl);
+
+    var buttonEl = document.createElement("button")
+    buttonEl.className = "btn btn-score";
+    buttonEl.textContent = "Save Score";
+
+    endQuizContainer.appendChild(buttonEl);
 };
 
 quizContentEl.addEventListener("click", buttonHandler);
