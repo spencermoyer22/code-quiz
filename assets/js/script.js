@@ -33,6 +33,24 @@ var timeLeft = 0;
 var questionIndex = 0;
 
 var homeScreen = function() {
+    // create header for quiz
+    var quizHeader = document.createElement("header");
+    
+    quizContentEl.appendChild(quizHeader);
+
+    //create anchor for header
+    var anchorEl = document.createElement("a");
+    anchorEl.href="highscores.html";
+    anchorEl.textContent = "View Highscores";
+
+    quizHeader.appendChild(anchorEl);
+
+    // create p element for header
+    var pEl = document.createElement("p");
+    pEl.innerHTML = "Time Left: <span class='counter'></span>";
+
+    quizHeader.appendChild(pEl);
+
     //create container for quiz home page
     var container = document.createElement("div");
     container.className="container container-home";
@@ -84,7 +102,6 @@ var addQuestions = function() {
 
     //create question el for container
     var questionEl = document.createElement("h2");
-    questionEl.className = "question-element";
 
     quizContainer.appendChild(questionEl);
 
@@ -132,8 +149,26 @@ var buttonHandler = function() {
         checkAnswer();
     }
     else if (targetEl.matches(".btn-score")) {
-       // saveScore();
-       window.location.assign("../../highscores.html");
+        var savedInitials = document.querySelector("#initials").value;
+        var savedScore = score;
+
+        // verify input is entered into input field
+        if (!savedInitials) {
+            alert("Enter your initials.");
+            endQuiz();
+            return;
+        }
+
+        else {
+            highscores.push({
+                initials: savedInitials,
+                highscore: savedScore
+            });
+        }
+
+        saveScores();
+
+       window.location.replace("highscores.html")
     }
 };
 
@@ -207,11 +242,6 @@ var endQuiz = function() {
 
     endQuizContainer.appendChild(inputEl);
 
-    // var anchorEl = document.createElement("a");
-    // anchorEl.href = "../../../highscores.html";
-    
-    // endQuizContainer.appendChild(anchorEl);
-
     var buttonEl = document.createElement("button")
     buttonEl.className = "btn btn-score";
     buttonEl.textContent = "Save Score";
@@ -219,6 +249,37 @@ var endQuiz = function() {
     endQuizContainer.appendChild(buttonEl);
 };
 
+var saveScores = function() {
+    localStorage.setItem("scores", JSON.stringify(highscores));
+};
+
+var loadScores = function() {
+    // retrieve scores from storage
+    var savedScores = localstorage.getItem("scores");
+
+    // check if value is null
+    if (!savedScores) {
+        return false;
+    }
+
+    // change stringed storage back to array
+    savedScores = JSON.parse(savedScores);
+
+    // loop through array to print to the page
+    for (var i = 0; i < highscores.length; i++) {
+        createHighScoreEl(savedScores[i]);
+    }
+};
+
+var createHighScoreEl = function(highscoreObj) {
+    // create p element
+
+    var pEl = document.createElement("p");
+    pEl.className = "highscore-info";
+};
+
 quizContentEl.addEventListener("click", buttonHandler);
 
 homeScreen();
+
+loadScores();
