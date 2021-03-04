@@ -116,10 +116,11 @@ var buttonHandler = function() {
         }
 
         else {
-            highscores.push({
+            var newHighscore = {
                 initials: savedInitials,
                 highscore: savedScore
-            });
+            }
+            highscores.push(newHighscore);
         }
 
         saveScores();
@@ -127,8 +128,10 @@ var buttonHandler = function() {
        window.location.replace("highscores.html")
     }
     else if (targetEl.matches(".btn-restart")) {
-        console.log("btn-restart");
         window.location.replace("index.html");
+    }
+    else if (targetEl.matches(".btn-clear")) {
+        deleteScores();
     }
 };
 
@@ -227,23 +230,28 @@ var loadScores = function() {
 
     // loop through array to print to the page
     for (var i = 0; i < highscores.length; i++) {
-        createHighScoreEl(savedScores[i]);
+        var scoreContainer = document.querySelector(".scoreContainer");
+
+        var pEl = document.createElement("p");
+        pEl.textContent = savedScores[i].initials + "-" + savedScores[i].highscore;
+
+        scoreContainer.appendChild(pel);
     }
 };
 
-var createHighScoreEl = function(highscoreObj) {
-    var containerEl = document.querySelector(".score-container");
+// var createHighScoreEl = function(highscoreObj) {
+//     var containerEl = document.querySelector(".score-container");
 
-    // create p element
+//     // create p element
 
-    var pEl = document.createElement("p");
-    pEl.className = "highscore-info";
+//     var pEl = document.createElement("p");
+//     pEl.textContent = highscoreObj
 
-    containerEl.appendChild(pEl);
-};
+//     containerEl.appendChild(pEl);
+// };
 
 var deleteScores = function () {
-
+    localStorage.removeItem("scores");
 };
 
 quizContentEl.addEventListener("click", buttonHandler);
