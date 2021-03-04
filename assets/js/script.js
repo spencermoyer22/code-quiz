@@ -32,50 +32,6 @@ var highscores = [];
 var timeLeft = 0;
 var questionIndex = 0;
 
-var homeScreen = function() {
-    // create header for quiz
-    var quizHeader = document.createElement("header");
-    
-    quizContentEl.appendChild(quizHeader);
-
-    //create anchor for header
-    var anchorEl = document.createElement("a");
-    anchorEl.href="highscores.html";
-    anchorEl.textContent = "View Highscores";
-
-    quizHeader.appendChild(anchorEl);
-
-    // create p element for header
-    var pEl = document.createElement("p");
-    pEl.innerHTML = "Time Left: <span class='counter'></span>";
-
-    quizHeader.appendChild(pEl);
-
-    //create container for quiz home page
-    var container = document.createElement("div");
-    container.className="container container-home";
-
-    quizContentEl.appendChild(container);
-
-    // Create h1 element for quiz home page
-    var quizTitle = document.createElement("h1");
-    quizTitle.textContent = "JavaScript Quiz Challenge";
-
-    container.appendChild(quizTitle);
-    
-    // create description for quiz under h1 element
-    var quizDescription = document.createElement("p");
-    quizDescription.textContent = "Answer the JavaScript related code questions within the time limit. If you answer incorrectly you will be penalized 10 seconds.";
-
-    container.appendChild(quizDescription);
-
-    var buttonStart = document.createElement("button");
-    buttonStart.textContent= "Start Quiz";
-    buttonStart.className = "btn btn-start";
-
-    container.append(buttonStart);
-};
-
 var beginQuiz = function() {
     // begin counting down
     countdown();
@@ -169,6 +125,10 @@ var buttonHandler = function() {
         saveScores();
 
        window.location.replace("highscores.html")
+    }
+    else if (targetEl.matches(".btn-restart")) {
+        console.log("btn-restart");
+        window.location.replace("index.html");
     }
 };
 
@@ -272,10 +232,14 @@ var loadScores = function() {
 };
 
 var createHighScoreEl = function(highscoreObj) {
+    var containerEl = document.querySelector(".score-container");
+
     // create p element
 
     var pEl = document.createElement("p");
     pEl.className = "highscore-info";
+
+    containerEl.appendChild(pEl);
 };
 
 var deleteScores = function () {
@@ -283,7 +247,5 @@ var deleteScores = function () {
 };
 
 quizContentEl.addEventListener("click", buttonHandler);
-
-homeScreen();
 
 loadScores();
