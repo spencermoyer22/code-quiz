@@ -28,9 +28,9 @@ var questionsArray = [
 var quizContentEl = document.querySelector("#quiz-body");
 var quizHeader = document.querySelector("header")
 var score = 0;
-var highscores = [];
 var timeLeft = 0;
 var questionIndex = 0;
+var highscores = [];
 
 var beginQuiz = function() {
     // begin counting down
@@ -116,12 +116,12 @@ var buttonHandler = function() {
         }
 
         else {
-            highscores = JSON.parse(localStorage.getItem("scores")); 
-            var newHighscore = {
+            highscores = JSON.parse(localStorage.getItem("scores")) || [];
+            var newHighScore = {
                 initials: savedInitials,
                 highscore: savedScore
             };
-            highscores.push(newHighscore);
+            highscores.push(newHighScore);
         }
 
         saveScores();
@@ -217,44 +217,12 @@ var saveScores = function() {
     localStorage.setItem("scores", JSON.stringify(highscores));
 };
 
-var loadScores = function() {
-    // retrieve scores from storage
-    // var savedScores = localStorage.getItem("scores");
-
-    // check if value is null
-    if (!highscores) {
-        return false;
-    }
-
-    // change stringed storage back to array
-    highscores = JSON.parse(localStorage.getItem("scores"));
-
-    // loop through array to print to the page
-    for (var i = 0; i < highscores.length; i++) {
-        var scoreContainer = document.querySelector(".score-container");
-
-        var pEl = document.createElement("p");
-        pEl.textContent = highscores[i].initials + "-" + highscores[i].highscore;
-
-        scoreContainer.appendChild(pEl);
-    }
-};
-
-// var createHighScoreEl = function(highscoreObj) {
-//     var containerEl = document.querySelector(".score-container");
-
-//     // create p element
-
-//     var pEl = document.createElement("p");
-//     pEl.textContent = highscoreObj
-
-//     containerEl.appendChild(pEl);
-// };
-
 var deleteScores = function () {
+    //delete previous scores printed
+    var previousScores = document.querySelector(".score-sheet");
+    previousScores.remove();
+
     localStorage.removeItem("scores");
 };
 
 quizContentEl.addEventListener("click", buttonHandler);
-
-loadScores();
