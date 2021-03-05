@@ -116,10 +116,11 @@ var buttonHandler = function() {
         }
 
         else {
+            highscores = JSON.parse(localStorage.getItem("scores")); 
             var newHighscore = {
                 initials: savedInitials,
                 highscore: savedScore
-            }
+            };
             highscores.push(newHighscore);
         }
 
@@ -218,24 +219,24 @@ var saveScores = function() {
 
 var loadScores = function() {
     // retrieve scores from storage
-    var savedScores = localStorage.getItem("scores");
+    // var savedScores = localStorage.getItem("scores");
 
     // check if value is null
-    if (!savedScores) {
+    if (!highscores) {
         return false;
     }
 
     // change stringed storage back to array
-    savedScores = JSON.parse(savedScores);
+    highscores = JSON.parse(localStorage.getItem("scores"));
 
     // loop through array to print to the page
     for (var i = 0; i < highscores.length; i++) {
-        var scoreContainer = document.querySelector(".scoreContainer");
+        var scoreContainer = document.querySelector(".score-container");
 
         var pEl = document.createElement("p");
-        pEl.textContent = savedScores[i].initials + "-" + savedScores[i].highscore;
+        pEl.textContent = highscores[i].initials + "-" + highscores[i].highscore;
 
-        scoreContainer.appendChild(pel);
+        scoreContainer.appendChild(pEl);
     }
 };
 
